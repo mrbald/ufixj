@@ -31,6 +31,7 @@
 
 package net.bobah.ufixj;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -45,6 +46,12 @@ import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 public class MyBenchmark {
     AtomicLongFieldUpdater<MyBenchmark> updater = AtomicLongFieldUpdater.newUpdater(MyBenchmark.class, "atomic");
     private volatile long atomic;
+
+    class FixMessage {
+        IntArrayList tag = new IntArrayList(1024);
+        IntArrayList beg = new IntArrayList(1024);
+        IntArrayList end = new IntArrayList(1024);
+    };
 
     @Benchmark
     @Threads(4)

@@ -1,17 +1,18 @@
 package net.bobah.ufixj;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.kqueue.KQueueEventLoopGroup;
 import io.netty.channel.kqueue.KQueueServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.HttpServerKeepAliveHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,16 +55,7 @@ public class App
                                     .addLast(new HttpServerKeepAliveHandler())
                                     .addLast(new HttpObjectAggregator(1 << 20))
                                     //.addLast(new HttpServerExpectContinueHandler()) <-- encapsulated in HttpObjectAggregator
-                                    .addLast(new SimpleChannelInboundHandler<FullHttpRequest>() {
-                                        @Override
-                                        protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
-                                            ByteBuf content = Unpooled.copiedBuffer("Hello There", CharsetUtil.UTF_8);
-
-                                            FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-                                            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain; charset=UTF-8");
-                                            ctx.writeAndFlush(response);
-                                        }
-                                    });
+                                    .addLast(new HttpHandler());
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 1000)

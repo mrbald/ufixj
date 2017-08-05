@@ -39,5 +39,10 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.openrtb</groupId>
+            <artifactId>openrtb-core</artifactId>
+            <version>1.4.3</version>
+        </dependency>
     </dependencies>
 </project>
