@@ -45,4 +45,31 @@
             <version>1.4.3</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>netty</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <version>1.3.2</version>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <arguments>
+                                <argument>-server</argument>
+                                <argument>-Xms512m</argument>
+                                <argument>-Xmx512m</argument>
+                                <argument>-classpath</argument>
+                                <classpath/>
+                                <argument>net.bobah.ufixj.App</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
