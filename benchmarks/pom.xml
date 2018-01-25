@@ -64,6 +64,11 @@ THE POSSIBILITY OF SUCH DAMAGE.
             <groupId>it.unimi.dsi</groupId>
             <artifactId>fastutil</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-buffer</artifactId>
+            <version>4.0.33.Final</version>
+        </dependency>
     </dependencies>
 
     <properties>
